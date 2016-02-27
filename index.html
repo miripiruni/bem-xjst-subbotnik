@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Шаблонизатор bem-xjst</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="shower/themes/ribbon/styles/screen-4x3.css">
+    <link rel="stylesheet" href="./styles/common.css">
+
+    <!--<link rel="stylesheet" href="highlight.js/styles/default.css">-->
+    <!--<script src="highlight.js/highlight.pack.js"></script>-->
+    <!--<script>hljs.initHighlightingOnLoad();</script>-->
+    <script src="./scripts/tweenlite.min.js"></script>
+</head>
+<body class="shower list">
+    <header class="caption">
+        <h1>Шаблонизатор bem-xjst</h1>
+        <p>Yandex</p>
+    </header>
+
+    <section class="slide" id="cover" style="background: #ffdb4d">
+        <h2 style="background: rgba(0,0,0,0); color: #000; ; padding-bottom: 30px;">Шаблонизатор bem-xjst</h2>
+
+        <p>Вячеслав Олиянчук</p>
+        <p class="foot-note">Яндекс.Субботник, 27 февраля 2016</p>
+    </section>
+
+    <section class="slide">
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/qfox.png) center no-repeat; background-size: 100%; text-shadow: 0 0 3px #fff">
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/gist.png) center no-repeat; background-size: 75%;">
+        <p style="position: absolute; bottom: 60px;"><a href="bit.ly/tplcmp">bit.ly/tplcmp</a></p>
+    </section>
+
+    <section class="slide">
+        <p style="font-size: 4em; position: relative; margin-top: 20%;">
+            <img src="pictures/gh.png" style="width: 1em; vertical-align: baseline; position: relative; top: 0.2em;" alt=""/>
+            <a href="https://github.com/bem/bem-xjst/" style="background: none;">bem/bem-xjst</a>
+        </p>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/bemhtml.png) center no-repeat; background-size: cover;">
+    </section>
+    <section class="slide" style="background: #fff url(pictures/bemhtml-bemtree.png) center no-repeat; background-size: cover;">
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/xslt.png) center no-repeat; background-size: cover;">
+    </section>
+    <section class="slide" style="background: #fff url(pictures/xjst.png) center no-repeat; background-size: cover;">
+    </section>
+
+    <section class="slide">
+    </section>
+
+    <section class="slide">
+        <h2>История 1: про данные</h2>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/scheme-1.png) center no-repeat; background-size: contain;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    layout
+        include ../blocks/header
+        include ../blocks/content
+        include ../blocks/footer
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        user: { currency: 'RUR', session: { … } },
+        searchResults: [
+            {
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            },
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        <mark>user</mark>: { currency: 'RUR', session: { … } },
+        searchResults: [
+            {
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            },
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        user: { currency: 'RUR', session: { … } },
+        <mark>searchResults</mark>: [
+            {
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            },
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/scheme-2.png) center no-repeat; background-size: contain;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+/**
+ * @param {Object} offer
+ *   @param {String} offer.url
+ *   @param {String} offer.title
+ */
+mixin offer(offer)
+    li.offer
+        a(href=offer.url)
+            = offer.title
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+.content
+    each offer in data.searchResults
+        include ../block/offer(offer)
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+.content
+    each offer in <mark class="important">data.searchResults</mark>
+        include ../block/offer(offer)
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+/**
+ * @param {Object} offer
+ *   @param {String} offer.url
+ *   @param {String} offer.title
+ */
+mixin offer(offer)
+    li.offer
+        a(href=<mark class="important">offer.url</mark>)
+            = offer.title
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+.data .searchResults .offer {
+    display: block;
+}
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+.data > .searchResults > .offer {
+    display: block;
+}
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/css.jpg) center no-repeat; background-size: contain;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+<s>.data > .searchResults ></s> .offer {
+    display: block;
+}
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/scheme-3.png) center no-repeat; background-size: contain;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    layout
+        include ../blocks/header
+        include ../blocks/content
+        <mark>include ../blocks/nearby</mark>
+        include ../blocks/footer
+
+    nearby
+        each item in data.nearby
+            offer(item)
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    layout
+        include ../blocks/header
+        include ../blocks/content
+        include ../blocks/nearby
+        include ../blocks/footer
+
+    nearby
+        each item in <mark class="important">data.nearby</mark>
+            offer(item)
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    .nearby .offer
+    {
+        color: red;
+        font-weight: 1.5em;
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    <mark class="important">.nearby</mark> .offer
+    {
+        color: red;
+        font-weight: 1.5em;
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    .offer
+    {
+        color: red;
+        font-weight: 1.5em;
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        user: { currency: 'RUR', session: { … } },
+        searchResults: [
+<mark>            {
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            }</mark>,
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        user: { currency: 'RUR', session: { … } },
+        searchResults: [
+            {
+                <mark>block: 'offer',</mark>
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            },
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    // Входные данные
+    {
+        block: 'offer',
+        area: '108',
+        price: '9 990 000',
+        created: 1456099246245,
+        …
+    }
+
+    // Шаблон
+    block('offer')(
+        tag()('li')
+    );
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+    </section>
+
+    <section class="slide">
+        <h2>История 2: про рутину</h2>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    {
+        user: { currency: 'RUR', session: { … } },
+        searchResults: [
+            {
+                area: '108',
+                price: '9 990 000',
+                created: 1456099246245,
+                …
+            },
+            …
+        ]
+    }
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>
+    layout
+        include ../blocks/header
+        <mark>include ../blocks/nav</mark>
+        include ../blocks/content
+        include ../blocks/footer
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <ol class="tree" style="margin-left: 2em;">
+            <li>
+                page
+                <ol>
+                    <li>
+                        header
+                        <ol>
+                            <li>logo</li>
+                        </ol>
+                    </li>
+                    <li>
+                        nav
+                        <ol>
+                            <li><mark>item</mark></li>
+                            <li><mark>item</mark></li>
+                        </ol>
+                    </li>
+                    <li>
+                        …
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>{
+    block: 'page',
+    content: [
+        { block: 'header' },
+        { block: 'navigation' },
+        { block: 'content' },
+        { block: 'footer' }
+    ]
+}
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>{
+    <mark>block</mark>: 'page',
+    content: [
+        { block: 'header' },
+        { block: 'navigation' },
+        { block: 'content' },
+        { block: 'footer' }
+    ]
+}
+            </code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>{
+    block: 'page',
+    <mark>content</mark>: [
+        { block: 'header' },
+        { block: 'navigation' },
+        { block: 'content' },
+        { block: 'footer' }
+    ]
+}
+            </code>
+        </pre>
+
+        <p class="next"><a target="_blank"
+                href="http://miripiruni.github.io/bem-xjst/?bemhtml=%20&bemjson=(%7B%0A%20%20%20%20block%3A%20%27page%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20block%3A%20%27header%27%2C%0A%20%20%20%20%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20block%3A%20%27logo%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20content%3A%20%27Маркет%27%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D)%3B%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%0A%20%0A%2F%2F%20(%7B%0A%2F%2F%20%20%20%20%20block%3A%20%27page%27%2C%0A%2F%2F%20%20%20%20%20content%3A%20%5B%0A%2F%2F%20%20%20%20%20%20%20%20%20%7B%0A%2F%2F%20%20%20%20%20%20%20%20%20%20%20%20%20block%3A%20%27header%27%2C%0A%2F%2F%20%20%20%20%20%20%20%20%20%20%20%20%20content%3A%20%7B%0A%2F%2F%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20block%3A%20%27logo%27%2C%0A%2F%2F%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20content%3A%20%27Маркет%27%0A%2F%2F%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%2F%2F%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%2F%2F%20%7B%0A%20%20%20%20%2F%2F%20%20%20%20%20block%3A%20%27navigation%27%2C%20content%3A%20%5B%0A%20%20%20%20%2F%2F%20%20%20%20%20%20%20%20%20%7B%20elem%3A%20%27item%27%2C%20content%3A%20%27О%20компании%27%2C%20url%3A%20%27%2Fabout%27%20%7D%2C%0A%20%20%20%20%2F%2F%20%20%20%20%20%20%20%20%20%7B%20elem%3A%20%27item%27%2C%20content%3A%20%27Каталог%27%2C%20url%3A%20%27%2Fcatalog%27%20%7D%0A%20%20%20%20%2F%2F%20%20%20%20%20%5D%0A%20%20%20%20%2F%2F%20%7D%2C%0A%20%20%20%20%2F%2F%20%7B%0A%20%20%20%20%2F%2F%20%20%20%20%20block%3A%20%27content%27%2C%0A%20%20%20%20%2F%2F%20%20%20%20%20content%3A%20%5B%0A%20%20%20%20%2F%2F%20%20%20%20%20%20%20%20%20%7B%20block%3A%20%27article%27%2C%20content%3A%20%27Новинки…%27%20%7D%0A%20%20%20%20%2F%2F%20%20%20%20%20%5D%0A%20%20%20%20%2F%2F%20%7D%2C%0A%20%20%20%20%2F%2F%20%7B%20block%3A%20%27footer%27%20%7D%0A%2F%2F%20%5D%20%7D)%3B">Online demo</a></p>
+    </section>
+
+    <section class="slide">
+    </section>
+
+    <section class="slide">
+        <h2>История 3: про вариативность</h2>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/button.png) center no-repeat; background-size: 33%;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>mixin link(href, name, isNew)</code>
+            <code>  - var cls = "button";</code>
+            <code>  if isNew </code>
+            <code>    - cls = cls + " new"</code>
+            <code> </code>
+            <code>  a(href=href, class=cls)</code>
+            <code>    = name</code>
+            <code>     if isNew</code>
+            <code>       = " Новинка!"</code>
+            <code> </code>
+            <code>&lt;a href="/fish" class="button new"&gt;Рыба Новинка!&lt;/a&gt;</code>
+            <code>&lt;a href="/vegetable" class="button"&gt;Фрукты&lt;/a&gt;</code>
+        </pre>
+    </section>
+
+    <section class="slide" style="background-color: #000">
+        <div style="width:800px; height:400px; padding-top: 100px">
+            <canvas id="mon_canvas" width="800" height="400"></canvas>
+            <script src="./scripts/fire.js"></script>
+            <!-- demo from: http://codepen.io/mousman/pen/JYGLOZ?editors=1010 -->
+        </div>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>mixin link(href, name, isNew)</code>
+            <code>  - var cls = "button";</code>
+            <code>  if isNew </code>
+            <code>    - cls = cls + " new"</code>
+            <code> </code>
+            <code>  a(href=href, class=cls)</code>
+            <code>    = name</code>
+            <code>     if isNew</code>
+            <code>       = " Новинка!"</code>
+            <code> </code>
+            <code>&lt;a href="/fish" class="button new"&gt;Рыба Новинка!&lt;/a&gt;</code>
+            <code>&lt;a href="/vegetable" class="button"&gt;Фрукты&lt;/a&gt;</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/chip-n-dale.jpg) center no-repeat; background-size: 65%;">
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>&lt;a id="anchor"&gt;Якорь&lt;/a&gt;</code>
+            <code>&lt;a href="http://yandex.ru"&gt;Яндекс&lt;/a&gt;</code>
+        </pre>
+        <pre>
+            <code><mark>?</mark> {</code>
+            <code>    color: black;</code>
+            <code>    text-decoration: none;</code>
+            <code>}</code>
+            <code> </code>
+            <code><mark>?</mark> {</code>
+            <code>    color: red;</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>&lt;a id="anchor"&gt;Якорь&lt;/a&gt;</code>
+            <code>&lt;a href="http://yandex.ru"&gt;Яндекс&lt;/a&gt;</code>
+        </pre>
+        <pre>
+            <code><mark>a</mark> {</code>
+            <code>    color: black;</code>
+            <code>    text-decoration: none;</code>
+            <code>}</code>
+            <code> </code>
+            <code><mark>a[href]</mark> {</code>
+            <code>    color: red;</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>block('link')
+(
+    tag()('a'),
+    attrs()(function() {
+        return { href: this.ctx.url };
+    }),
+
+    <mark>match(function() { return this.ctx.isNew; })</mark>
+    (
+        mix()({ block: 'new' }),
+        content()(function() {
+            return applyNext() + ' Новинка!';
+        })
+    );
+);
+            </code>
+        </pre>
+    </section>
+
+
+
+    <section class="slide">
+    </section>
+
+    <section class="slide">
+        <h2>История 4: про точки расширения</h2>
+    </section>
+
+    <section class="slide">
+        <pre>
+            <code>&lt;<mark>tag</mark> class="<mark>bem-name</mark>  <mark>mixed</mark>  <mark>cls</mark>  <mark>js</mark>" <mark>attrs</mark>&gt;</code>
+            <code>    <mark>content</mark></code>
+            <code>&lt;/<mark>tag</mark>&gt;</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link').<mark>tag()('a')</mark>;</code>
+        </pre>
+
+        <div class="next">
+            <p>Результат шаблонизации BEMHTML:</p>
+            <pre>
+                <code>&lt;<mark>a</mark> class="link"&gt;</code>
+                <code>    content</code>
+                <code>&lt;/<mark>a</mark>&gt;</code>
+            </pre>
+        </div>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link').tag()('a');</code>
+            <code>block('link').<mark>mix()({ block: 'counter' })</mark>;</code>
+        </pre>
+        <div class="next">
+            <p>Результат шаблонизации BEMHTML:</p>
+            <pre>
+                <code>&lt;a class="link <mark>counter</mark>"&gt;</code>
+                <code>    content</code>
+                <code>&lt;/a&gt;</code>
+            </pre>
+        </div>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link').tag()('a');</code>
+            <code>block('link').mix()({ block: 'counter' });</code>
+            <code>block('link').<mark>attrs()(function() {
+    return { href: thix.ctx.url, target: '_blank' };
+})</mark>;</code>
+        </pre>
+        <div class="next">
+            <p>Результат шаблонизации BEMHTML:</p>
+            <pre>
+                <code>&lt;a class="link counter" <mark>href="https://ya.ru" target="_blank"</mark>&gt;</code>
+                <code>    content</code>
+                <code>&lt;/a&gt;</code>
+            </pre>
+        </div>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link').tag()('a');</code>
+            <code>block('link').mix()({ block: 'counter' });</code>
+            <code>block('link').attrs()(function() {
+    return { href: thix.ctx.url, target: '_blank' };
+});</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link')(</code>
+            <code>    tag()('a'),</code>
+            <code>    mix()({ block: 'counter' }),</code>
+            <code>    attrs()(function() {</code>
+            <code>        return { href: thix.ctx.url, target: '_blank' };</code>
+            <code>    })</code>
+            <code>);</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <p>Шаблоны:</p>
+        <pre>
+            <code>block('link')(</code>
+            <code>    tag()('a')</code>
+            <code>);</code>
+        </pre>
+        <pre>
+            <code>block('link')(</code>
+            <code>    mix()({ block: 'counter' }),</code>
+            <code>    attrs()(function() {</code>
+            <code>        return { href: thix.ctx.url, target: '_blank' };</code>
+            <code>    })</code>
+            <code>);</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Повторим всё вместе</h2>
+        <ul>
+            <li class="next">View-ориентированные данные</li>
+            <li class="next">Встроенный обход входных данных</li>
+            <li class="next">Сопоставление с условиями (pattern matching)</li>
+            <li class="next">Декомпозиция и расширяемость</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>bem-xjst</h2>
+        <ul>
+            <li class="next">Работает на сервере и клиенте</li>
+            <li class="next">Не требует компиляции шаблонов</li>
+            <li class="next">Шаблоны на чистом JS</li>
+        </ul>
+    </section>
+
+
+
+    <section class="slide">
+        <h2>Домашняя работа</h2>
+        <ul>
+            <li class="next">Документация на «русском-понятном»: <a href="https://github.com/bem/bem-xjst/blob/master/docs/ru/">GH/bem/bem-xjst/docs/ru/</a></li>
+            <li class="next"><a href="https://bem.github.io/bem-xjst">bem.github.io/bem-xjst</a><span class="next"> — можно шарить примеры</span></li>
+            <li class="next"><a href="https://github.com/bem/bem-xjst/issues?q=milestone%3A5.0.0+is%3Aclosed">npm install bem-xjst</a></li>
+        </ul>
+    </section>
+
+    <section class="slide" style="background: #fff url(pictures/tnx.png) bottom right
+        no-repeat; background-size: 50%;">
+        <h2>Благодарю за внимание</h2>
+        <p><a href="https://staff.yandex-team.ru/miripiruni/">@miripiruni</a></p>
+        <p>#yasubbotnik</p>
+    </section>
+
+
+    <section class="slide">
+        <h2>Благодарю за внимание</h2>
+        <ul>
+            <li>Документация на «русском-понятном»: <a href="https://github.com/bem/bem-xjst/blob/master/docs/ru/">GH/bem/bem-xjst/docs/ru/</a></li>
+            <li><a href="https://bem.github.io/bem-xjst">bem.github.io/bem-xjst</a> — можно шарить примеры</li>
+            <li><a href="https://github.com/bem/bem-xjst/issues?q=milestone%3A5.0.0+is%3Aclosed">npm install bem-xjst</a></li>
+        </ul>
+    </section>
+
+    <p class="badge">
+        <a href="https://github.com/shower/shower">Fork me on GitHub</a>
+    </p>
+    <!--
+    To hide progress bar from entire presentation
+    just remove “progress” element.
+    -->
+    <div class="progress"></div>
+    <script src="shower/shower.min.js"></script>
+    <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+    <!-- Photos by John Carey, fiftyfootshadows.net -->
+</body>
+</html>
