@@ -4,6 +4,6 @@
 
 [Слайды](http://miripiruni.github.io/bem-xjst-subbotnik/)
 
-Видео — скоро…
+[Видео](https://events.yandex.ru/lib/talks/3350/)
 
 Использован здравый смысл и движок презентаций [Shower](http://shwr.me).
